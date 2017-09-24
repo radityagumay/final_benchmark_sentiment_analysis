@@ -1,7 +1,6 @@
 import os
 import pymysql
 
-
 class Sentiment:
     def __init__(self):
         self.path = os.path.expanduser("~/PycharmProjects/FinalSentimentAnalysis/com/radityalabs/sentiment/data")
@@ -43,5 +42,14 @@ class Sentiment:
                 conn.rollback()
         conn.close()
 
+    # retrieve review data from database
+    def load_review_from_database(self):
+        c = self.connection()
+        c = c.cursor()
+        c.execute("SELECT * FROM review_label_benchmark_with_polarity")
+        rows = c.fetchall()
+        for d in rows:
+            print(d)
+
 sentiment = Sentiment()
-sentiment.insert_into_database()
+sentiment.load_review_from_database()
